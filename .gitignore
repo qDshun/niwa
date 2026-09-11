@@ -1,0 +1,2 @@
+# Azure-only; ignored by Pages, and it leaks a hint in a public repo.
+staticwebapp.config.json

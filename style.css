@@ -1,0 +1,251 @@
+/* --------------------------------------------------------------------
+   the veil - shared styling
+
+   Two palettes on one page. The material side is cold and grey, the
+   spirit side is green-amber and rotting. Nothing here is interactive:
+   no JS drives any of it, and every "effect" is a static rule.
+   -------------------------------------------------------------------- */
+
+:root {
+  --void:      #070806;
+  --material:  #b9bcb4;
+  --materialq: #6e716a;
+  --spirit:    #93a86a;
+  --spiritdim: #4a5a34;
+  --bleed:     #7d3a2c;
+  --seam:      #1c2016;
+
+  /* The spirit text on the front page sits at almost exactly the page
+     background. Invisible on a normal monitor, obvious the moment you
+     select the text, view source, or open devtools. That is the point,
+     so do not "fix" the contrast here. */
+  --hidden:    #0c0e0a;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--void);
+  color: var(--material);
+  font-family: "Iosevka", "Consolas", "DejaVu Sans Mono", ui-monospace, monospace;
+  font-size: 15px;
+  line-height: 1.72;
+}
+
+body::before {
+  /* faint horizontal tape damage across everything */
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.018) 0px,
+    rgba(255, 255, 255, 0.018) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  z-index: 99;
+}
+
+::selection { background: var(--spiritdim); color: #e8f0d8; }
+
+a { color: var(--spirit); text-decoration: none; border-bottom: 1px solid var(--spiritdim); }
+a:hover { color: #cfe0a8; border-bottom-color: var(--spirit); }
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  margin: 0 0 0.2em;
+}
+
+h2 {
+  font-size: 0.86rem;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--materialq);
+  margin: 2.8em 0 0.9em;
+  border-bottom: 1px solid var(--seam);
+  padding-bottom: 0.5em;
+}
+
+.sub {
+  color: var(--materialq);
+  letter-spacing: 0.16em;
+  font-size: 0.8rem;
+  text-transform: lowercase;
+  margin: 0 0 3em;
+}
+
+code { color: var(--spirit); }
+
+/* ---------------------------------------------------- the split screen */
+
+.split main {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  min-height: 100vh;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.side { padding: 12vh 3.2rem; }
+
+.seam {
+  background: linear-gradient(
+    to bottom, transparent, var(--seam) 12%, var(--seam) 88%, transparent
+  );
+}
+
+.material-side { color: var(--material); }
+
+/* Present in the document, invisible to the eye. Not display:none - it has
+   to survive select-all and be findable by anyone who thinks to look. */
+.spirit-side { color: var(--hidden); }
+.spirit-side a { color: var(--hidden); border-bottom-color: transparent; }
+.spirit-side ::selection { background: var(--bleed); color: #f4e2d8; }
+
+.whisper {
+  color: var(--materialq);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  margin-top: 4rem;
+  opacity: 0.55;
+}
+
+/* Both closing whispers are hidden. Nothing on the visible half should admit
+   that a second half exists; they surface on select-all with the spirit
+   column.
+
+   This rule is load-bearing for the spirit column too, not just the material
+   one. .spirit-side sets its colour on the <section>, which reaches the
+   paragraph only by inheritance - and .whisper sets colour directly on that
+   paragraph, so without this the whisper would win and render visibly inside
+   an otherwise hidden column. */
+.side .whisper { color: var(--hidden); opacity: 1; }
+
+/* ------------------------------------------------- interior veil pages */
+
+.veil main {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 11vh 2rem 18vh;
+}
+
+.veil { color: var(--spirit); }
+.veil p { color: #8f9c78; }
+.veil h1 { color: var(--spirit); }
+.veil strong { color: #cfe0a8; font-weight: 400; }
+
+.note {
+  border-left: 2px solid var(--spiritdim);
+  padding-left: 1.2rem;
+  color: var(--materialq) !important;
+  font-size: 0.86rem;
+  margin: 2.4rem 0;
+}
+
+/* ----------------------------------------------------------- the tables */
+
+.tables {
+  display: flex;
+  gap: 2.4rem;
+  flex-wrap: wrap;
+  margin: 2.4rem 0;
+}
+
+table { border-collapse: collapse; }
+
+caption {
+  text-align: left;
+  color: var(--materialq);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding-bottom: 0.8rem;
+  white-space: nowrap;
+}
+
+.ts { color: var(--bleed); }
+
+td, th {
+  padding: 0.28rem 0.5rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+th { color: var(--seam); font-weight: 400; border-right: 1px solid var(--seam); }
+td { color: var(--spirit); }
+
+tr:hover td { background: rgba(147, 168, 106, 0.07); }
+
+/* ----------------------------------------------------------- the legend */
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(6.2rem, 1fr));
+  gap: 0.35rem 0.9rem;
+  margin: 1.4rem 0 0;
+  font-size: 0.82rem;
+}
+
+.g b { color: var(--spiritdim); font-weight: 400; margin-right: 0.6rem; }
+.g { color: #cfe0a8; }
+
+/* ------------------------------------------------------------- hints */
+
+details {
+  border-top: 1px solid var(--seam);
+  padding: 0.9rem 0;
+}
+
+summary {
+  cursor: pointer;
+  color: var(--materialq);
+  font-size: 0.84rem;
+  letter-spacing: 0.08em;
+  list-style: none;
+}
+
+summary::-webkit-details-marker { display: none; }
+summary::before { content: "+ "; color: var(--spiritdim); }
+details[open] summary::before { content: "\2212  "; }
+summary:hover { color: var(--spirit); }
+.h { color: var(--seam); }
+
+details p { font-size: 0.88rem; padding-left: 1.1rem; }
+
+.onward { margin-top: 3.5rem; }
+
+/* ------------------------------------------------------------- finale */
+
+.through main { max-width: 620px; text-align: left; }
+
+.fragments {
+  font-size: 1.35rem;
+  letter-spacing: 0.3em;
+  color: #cfe0a8;
+  margin: 2.2rem 0;
+  padding: 1.6rem 0;
+  border-top: 1px solid var(--seam);
+  border-bottom: 1px solid var(--seam);
+  text-align: center;
+}
+
+.signoff {
+  margin-top: 4.5rem;
+  color: var(--spirit) !important;
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 760px) {
+  .split main { grid-template-columns: 1fr; }
+  .seam { display: none; }
+  .side { padding: 6vh 1.6rem; }
+}

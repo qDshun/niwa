@@ -1,0 +1,11 @@
+# Niwa - crawler directives
+#
+# The lower floor is not to be indexed. It does not index reliably in any
+# case; the crawler comes back with two different readings of the same
+# path and refuses to choose between them.
+
+User-agent: *
+Disallow: /spirit/
+Disallow: /veil/
+
+# (whoever sealed it left the plate where it was. 07. it is still served.)
