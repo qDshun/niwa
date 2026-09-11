@@ -1,0 +1,6 @@
+# The PNG carries a text payload after IEND. Any line-ending conversion
+# would corrupt both the image and the letter. Never touch it.
+*.png binary
+*.html text eol=lf
+*.css  text eol=lf
+*.txt  text eol=lf
