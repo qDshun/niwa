@@ -104,10 +104,16 @@ code { color: var(--spirit); }
 
 .material-side { color: var(--material); }
 
-/* Present in the document, invisible to the eye. Not display:none - it has
-   to survive select-all and be findable by anyone who thinks to look. */
-.spirit-side { color: var(--hidden); }
-.spirit-side a { color: var(--hidden); border-bottom-color: transparent; }
+/* Present in the document, invisible to the eye. Not display:none - it has to
+   survive select-all and be findable by anyone who thinks to look.
+
+   The descendant selector is load-bearing, not belt-and-braces. <code>, <a>
+   and .sub each set their own colour, and a rule matching an element directly
+   always wins over one inherited from an ancestor no matter the specificity.
+   Without it the file path renders in bright green inside the one column
+   nobody is supposed to be able to read. */
+.spirit-side, .spirit-side * { color: var(--hidden); }
+.spirit-side a { border-bottom-color: transparent; }
 .spirit-side ::selection { background: var(--bleed); color: #f4e2d8; }
 
 .whisper {
